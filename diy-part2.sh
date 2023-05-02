@@ -9,6 +9,30 @@
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
-
 # Modify default IP
-#sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.100.2/g' package/base-files/files/bin/config_generate
+sed -i "s/hostname='OpenWrt'/hostname='LEDE'/g" ./package/base-files/files/bin/config_generate
+#sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' ./package/feeds/luci/luci-ssl-nginx/Makefile
+#sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' ./package/feeds/luci/luci-nginx/Makefile
+sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
+sed -i 's|<a href="https://github.com/openwrt/luci">Powered by <%|<a href="https://www.right.com.cn/forum/space-uid-671291.html">点我到恩山无线论坛<突破重韦> <%|g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/footer.htm
+rm -rf package/luci-app-AdGuardHome/AdGuardHome
+rm -rf package/helloworld/v2ray-geodata
+rm -rf package/openwrt-passwall/pdnsd-alt
+#rm -rf package/helloworld/chinadns-ng
+#rm -rf package/helloworld/dns2socks
+#rm -rf package/helloworld/dns2tcp
+#rm -rf package/helloworld/gn
+#rm -rf package/helloworld/hysteria
+#rm -rf package/helloworld/ipt2socks
+#rm -rf package/helloworld/microsocks
+#rm -rf package/helloworld/naiveproxy
+#rm -rf package/helloworld/shadowsocks-rust
+#rm -rf package/helloworld/shadowsocksr-libev
+#rm -rf package/helloworld/simple-obfs
+#rm -rf package/helloworld/tcping
+#rm -rf package/helloworld/trojan
+#rm -rf package/helloworld/v2ray-core
+#rm -rf package/helloworld/v2ray-plugin
+#rm -rf package/helloworld/xray-core
+#rm -rf package/helloworld/xray-plugin
