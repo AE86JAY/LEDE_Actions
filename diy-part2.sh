@@ -16,9 +16,11 @@ sed -i "s/hostname='OpenWrt'/hostname='LEDE'/g" ./package/base-files/files/bin/c
 #sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' ./package/feeds/luci/luci-nginx/Makefile
 sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
 sed -i 's|<a href="https://github.com/openwrt/luci">Powered by <%|<a href="https://www.right.com.cn/forum/space-uid-671291.html">点我到恩山无线论坛<突破重韦> <%|g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-rm -rf package/luci-app-AdGuardHome/AdGuardHome
-rm -rf package/helloworld/v2ray-geodata
-rm -rf package/openwrt-passwall/pdnsd-alt
+#rm -rf package/luci-app-AdGuardHome/AdGuardHome
+#rm -rf package/helloworld/v2ray-geodata
+#rm -rf feeds/packages/net/v2ray-geodata
+#rm -rf feeds/packages/net/pdnsd-alt
+#rm -rf package/openwrt-passwall/pdnsd-alt
 #rm -rf package/helloworld/chinadns-ng
 #rm -rf package/helloworld/dns2socks
 #rm -rf package/helloworld/dns2tcp

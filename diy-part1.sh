@@ -14,11 +14,6 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add a feed source
-git clone https://github.com/Cneupa/luci-app-bypass.git package/bypass
-git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
-git clone -b luci https://github.com/xiaorouji/openwrt-passwall.git package/passwall
-git clone https://github.com/fw876/helloworld package/helloworld
-#git clone https://github.com/vernesong/OpenClash.git package/OpenClash
 git clone https://github.com/Diciya/luci-app-broadbandacc.git package/luci-app-broadbandacc
 git clone https://github.com/riverscn/openwrt-iptvhelper.git package/iptvhelper
 git clone https://github.com/xiaozhuai/luci-app-filebrowser.git package/filebrowser
