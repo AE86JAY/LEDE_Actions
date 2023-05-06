@@ -1,0 +1,186 @@
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+
+name: ACRH17第五版
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+
+#定时触发开始编译
+  schedule:
+  - cron: 0 17 14 * *
+
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: 5.config
+  DIY_P1_SH: diy-part1.sh
+  DIY_P2_SH: diy-part2.sh
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 检查
+      uses: actions/checkout@main
+    
+    - name: 安装编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        docker rmi `docker images -q`
+        sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
+        sudo -E apt-mark hold grub-efi-amd64-signed
+        sudo -E apt update
+        sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap*
+        sudo -E apt -y full-upgrade
+        sudo -E apt -y install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+        sudo -E systemctl daemon-reload
+        sudo -E apt -y autoremove --purge
+        sudo -E apt clean
+        sudo -E timedatectl set-timezone "Asia/Shanghai"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+    
+    - name: 下载源码
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
+    - name: 缓存
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: 'acrh17_5'
+        prefix: 'openwrt'
+
+    - name: 加载软件源
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x $DIY_P1_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P1_SH
+
+    - name: 更新软件源
+      run: cd openwrt && ./scripts/feeds update -a
+
+    - name: 安装软件源
+      run: cd openwrt && ./scripts/feeds install -a -f && ./scripts/feeds install -a -f
+
+    - name: 加载自定义配置
+      run: |
+        [ -e files ] && mv files openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $DIY_P2_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P2_SH
+        
+    - name: 再次安装软件源
+      run: cd openwrt && ./scripts/feeds install -a -f && $GITHUB_WORKSPACE/$DIY_P2_SH && ./scripts/feeds install -a -f
+
+    - name: 下载包
+      id: package
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+        make download -j4
+        make dirclean
+        
+    - name: 整合固件
+      id: compile
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j1 || make -j1 V=s || make -j$(nproc) V=sc
+        echo "status=success" >> $GITHUB_OUTPUT
+
+    - name: 检查可用容量
+      if: (!cancelled())
+      run: df -hT
+
+    - name: 组织文件
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd openwrt/bin/targets/*/*
+        tar -cvf package.tar packages
+        rm -rf feeds.buildinfo
+        rm -rf *kernel*
+        rm -rf *.manifest
+        rm -rf sha256sums
+        rm -rf version.buildinfo
+        sleep 2
+        mv *.bin 5-ACRH17-$(date +%Y.%m.%d-%H.%M).bin
+        mv *.trx 5-ACRH17-$(date +%Y.%m.%d-%H.%M).trx
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
+
+    - name: 上传固件
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: asus_rt-acrh17-OpenWrt
+        path: ${{ env.FIRMWARE }}
+
+    - name: 生成标签
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        time=$(date +%Y.%m.%d)
+        Rtime=$(date +%Y.%m.%d-%H:%M)
+        release_tag="rt-acrh17-t5-OpenWrt-$time"
+        release_name="rt-acrh17-t5-OpenWrt-$Rtime"
+        echo "默认网关：192.168.100.2
+        默认用户名|密码：root | password" >> release.txt
+        echo "release_name=$release_name" >> $GITHUB_OUTPUT
+        echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
+        echo "status=success" >> $GITHUB_OUTPUT
+        
+    - name: 上传固件至项目
+      uses: softprops/action-gh-release@v1
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_USER_TOKEN }}
+      with:
+        name: ${{ steps.tag.outputs.release_name }} 
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        body_path: release.txt
+        files: ${{ env.FIRMWARE }}/*
+
+    - name: 删除任务
+      uses: FunctionXJB/delete-workflow-runs@main
+      with:
+        retain_days: 18
+        keep_minimum_runs: 3
+        
+    - name: 'Server酱通知'
+      uses: easychen/github-action-server-chan@v1.0.0
+      if: steps.compile.outputs.status == 'success' && !cancelled()
+      with:
+         desp: 🎉华硕RT-ACRH17固件编译成功，尽情搞机吧🎉
+         sendkey: ${{ secrets.sendkey }}
+         title: " ACRH17第五版固件编译成功"
