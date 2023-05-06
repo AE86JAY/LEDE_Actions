@@ -86,7 +86,7 @@ jobs:
       run: cd openwrt && ./scripts/feeds update -a
 
     - name: 安装软件源
-      run: cd openwrt && ./scripts/feeds install -a -f && ./scripts/feeds install -a -f
+      run: cd openwrt && ./scripts/feeds install -a  && ./scripts/feeds install -a
 
     - name: 加载自定义配置
       run: |
@@ -115,7 +115,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j1 || make -j1 V=s || make -j$(nproc) V=sc
+        make -j1 V=sc || make -j$(nproc) V=sc
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 检查可用容量
