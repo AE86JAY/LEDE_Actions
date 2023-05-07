@@ -20,8 +20,8 @@ on:
         default: 'false'
 
 #定时触发开始编译
-  schedule:
-  - cron: 0 17 14 * *
+#  schedule:
+#  - cron: 0 17 14 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -68,12 +68,12 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: 缓存
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        mixkey: 'acrh17_jj'
-        prefix: 'openwrt'
+#    - name: 缓存
+#      uses: klever1988/cachewrtbuild@main
+#      with:
+#        ccache: 'true'
+#        mixkey: 'acrh17_jj'
+#        prefix: 'openwrt'
 
     - name: 加载软件源
       run: |
@@ -177,10 +177,10 @@ jobs:
         retain_days: 18
         keep_minimum_runs: 3
         
-    - name: 'Server酱通知'
-      uses: easychen/github-action-server-chan@v1.0.0
-      if: steps.compile.outputs.status == 'success' && !cancelled()
-      with:
-         desp: 🎉华硕RT-ACRH17固件编译成功🎉
-         sendkey: ${{ secrets.sendkey }}
-         title: " ACRH17极简版固件编译成功"
+#    - name: 'Server酱通知'
+#      uses: easychen/github-action-server-chan@v1.0.0
+#      if: steps.compile.outputs.status == 'success' && !cancelled()
+#      with:
+#         desp: 🎉华硕RT-ACRH17固件编译成功🎉
+#         sendkey: ${{ secrets.sendkey }}
+#         title: " ACRH17极简版固件编译成功"
