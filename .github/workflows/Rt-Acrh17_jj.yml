@@ -29,9 +29,9 @@ env:
   FEEDS_CONF: feeds.test
   CONFIG_FILE: base.config
   DIY_P1_SH: ap1.sh
-  DIY_P2_SH: ap2t2.sh
+  DIY_P2_SH: ap2.sh
   UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: true
+  UPLOAD_FIRMWARE: false
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
   
