@@ -8,3 +8,12 @@ src-git passwall2 https://github.com/xiaorouji/openwrt-passwall2.git
 src-git OpenClash https://github.com/vernesong/OpenClash.git
 src-git bypass https://github.com/Cneupa/luci-app-bypass.git
 scr-git adguardhome https://github.com/xiaoxiao29/luci-app-adguardhome.git
+src-git aliddns https://github.com/chenhw2/luci-app-aliddns.git
+src-git parentcontrol https://github.com/sirpdboy/luci-app-parentcontrol.git
+src-git ddnsgo https:https://github.com/jeessy2/ddns-go.git
+src-git netspeedtest https://github.com/sirpdboy/netspeedtest.git
+src-git ddnsgoapp https://github.com/sirpdboy/luci-app-ddns-go.git
+src-git OpenAppFilter https://github.com/destan19/OpenAppFilter.git
+src-git filebrowser https://github.com/xiaozhuai/luci-app-filebrowser.git
+src-git iptvhelper https://github.com/riverscn/openwrt-iptvhelper.git
+src-git broadbandacc https://github.com/Diciya/luci-app-broadbandacc.git
