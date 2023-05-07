@@ -29,7 +29,7 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: base.config
   DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: ap2.sh
+  DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
@@ -146,8 +146,8 @@ jobs:
       run: |
         time=$(date +%Y.%m.%d)
         Rtime=$(date +%Y.%m.%d-%H:%M)
-        release_tag="asus_rt-acrh17-OpenWrt-$time"
-        release_name="asus_rt-acrh17-OpenWrt-$Rtime"
+        release_tag="acrh17极简版-$time"
+        release_name="acrh17极简版-$Rtime"
         echo "默认网关：192.168.100.2
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
