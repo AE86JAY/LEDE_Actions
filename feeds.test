@@ -16,4 +16,3 @@ src-git ddnsgoapp https://github.com/sirpdboy/luci-app-ddns-go.git
 src-git OpenAppFilter https://github.com/destan19/OpenAppFilter.git
 src-git filebrowser https://github.com/xiaozhuai/luci-app-filebrowser.git
 src-git iptvhelper https://github.com/riverscn/openwrt-iptvhelper.git
-src-git broadbandacc https://github.com/Diciya/luci-app-broadbandacc.git
