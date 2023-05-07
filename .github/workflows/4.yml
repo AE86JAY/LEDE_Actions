@@ -152,8 +152,8 @@ jobs:
       run: |
         time=$(date +%Y.%m.%d)
         Rtime=$(date +%Y.%m.%d-%H:%M)
-        release_tag="rt-acrh17-t4-OpenWrt-$time"
-        release_name="rt-acrh17-t4-OpenWrt-$Rtime"
+        release_tag="rt-acrh17固件-$time"
+        release_name="rt-acrh17固件$Rtime"
         echo "默认网关：192.168.100.2
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
