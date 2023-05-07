@@ -12,8 +12,8 @@
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.100.2/g' package/base-files/files/bin/config_generate
 sed -i "s/hostname='OpenWrt'/hostname='LEDE'/g" ./package/base-files/files/bin/config_generate
-sed -i 's/PKG_VERSION:=2022.3/PKG_VERSION:=2023.3/g' ./feeds/routing/batman-advMakefile
-sed -i 's/PKG_HASH:=218ffb534fead1c9b5b0d90ec1b2fba688209cdf00e861bece1cbf469fe69953/PKG_HASH:=2ce4ec04063252e7bfec3a2b3fa2a61b3b42c7b04d698ba60132bfab1d60a5cd/g' ./feeds/routing/batman-advMakefile
+sed -i 's/PKG_VERSION:=2022.3/PKG_VERSION:=2023.3/g' ./feeds/routing/batman-adv/Makefile
+sed -i 's/PKG_HASH:=218ffb534fead1c9b5b0d90ec1b2fba688209cdf00e861bece1cbf469fe69953/PKG_HASH:=2ce4ec04063252e7bfec3a2b3fa2a61b3b42c7b04d698ba60132bfab1d60a5cd/g' ./feeds/routing/batman-adv/Makefile
 sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
 sed -i 's|<a href="https://github.com/openwrt/luci">Powered by <%|<a href="https://www.right.com.cn/forum/space-uid-671291.html">点我到恩山无线论坛<突破重韦> <%|g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/footer.htm
 #rm -rf package/luci-app-AdGuardHome/AdGuardHome
