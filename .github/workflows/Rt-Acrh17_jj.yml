@@ -26,12 +26,12 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: feeds.test
+  FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: base.config
-  DIY_P1_SH: ap1.sh
+  DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: ap2.sh
   UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: false
+  UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
   
@@ -68,13 +68,6 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: 缓存
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        mixkey: 'acrh17_jj'
-        prefix: 'openwrt'
-
     - name: 加载软件源
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
@@ -105,7 +98,13 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
         make dirclean
-        
+   
+    - name: 缓存
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: 'acrh17_jj'
+        prefix: 'openwrt'     
     - name: 整合固件
       id: compile
       run: |
