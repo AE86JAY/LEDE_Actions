@@ -14,3 +14,4 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add a feed source
+git clone https://github.com/Diciya/luci-app-broadbandacc.git package/luci-app-broadbandacc
