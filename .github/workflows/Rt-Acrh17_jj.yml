@@ -68,12 +68,12 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-#    - name: 缓存
-#      uses: klever1988/cachewrtbuild@main
-#      with:
-#        ccache: 'true'
-#        mixkey: 'acrh17_jj'
-#        prefix: 'openwrt'
+    - name: 缓存
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: 'acrh17_jj'
+        prefix: 'openwrt'
 
     - name: 加载软件源
       run: |
@@ -86,7 +86,7 @@ jobs:
       run: cd openwrt && ./scripts/feeds update -a
 
     - name: 安装软件源
-      run: cd openwrt && ./scripts/feeds install -a -f && ./scripts/feeds install -a -f
+      run: cd openwrt && ./scripts/feeds install -a
 
     - name: 加载自定义配置
       run: |
@@ -95,27 +95,22 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-        
-    - name: 再次安装软件源
-      run: cd openwrt && ./scripts/feeds install -a -f && $GITHUB_WORKSPACE/$DIY_P2_SH && ./scripts/feeds install -a -f
 
     - name: 下载包
       id: package
       run: |
         cd openwrt
         make defconfig
-        make download -j8
+        make download -j1
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        make download -j4
         make dirclean
         
     - name: 整合固件
       id: compile
       run: |
         cd openwrt
-        echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 || make -j1 V=s
+        make -j1 V=s || make -j1 V=s
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 检查可用容量
