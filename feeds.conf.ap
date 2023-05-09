@@ -2,3 +2,4 @@ src-git --recursive packages https://github.com/coolsnowwolf/packages
 src-git --recursive luci https://github.com/coolsnowwolf/luci
 src-git --recursive routing https://github.com/coolsnowwolf/routing
 src-git --recursive telephony https://git.openwrt.org/feed/telephony.git
+src-git OpenClash https://github.com/vernesong/OpenClash.git
