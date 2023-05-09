@@ -17,5 +17,6 @@ sed -i "s/hostname='OpenWrt'/hostname='LEDE'/g" ./package/base-files/files/bin/c
 sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
 sed -i 's|<a href="https://github.com/openwrt/luci">Powered by <%|<a href="https://www.right.com.cn/forum/space-uid-671291.html">点我到恩山无线论坛<突破重韦> <%|g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/footer.htm
 # luci-app-easymesh
+rm -rf ./feeds/luci/applications/luci-app-easymesy
 git clone https://github.com/ntlf9t/luci-app-easymesh package/lean/luci-app-easymesh
-sed -i 's/wpad-mesh-openssl/wpad-openssl/g' package/lean/luci-app-easymesh/Makefile
+sed -i 's/wpad-openssl/wpad-mesh-openssl/g' package/lean/luci-app-easymesh/Makefile
