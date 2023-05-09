@@ -20,3 +20,7 @@ sed -i 's|<a href="https://github.com/openwrt/luci">Powered by <%|<a href="https
 rm -rf ./feeds/luci/applications/luci-app-easymesy
 git clone https://github.com/ntlf9t/luci-app-easymesh package/lean/luci-app-easymesh
 sed -i 's/wpad-openssl/wpad-mesh-openssl/g' package/lean/luci-app-easymesh/Makefile
+# git clone -b packages --single-branch https://github.com/xiaorouji/openwrt-passwall package/apps/passwall
+# git clone -b luci --single-branch https://github.com/xiaorouji/openwrt-passwall package/apps/luci-app-passwall
+# CONFIG_DEFAULT_luci-app-ssr-plus
+# CONFIG_PACKAGE_luci-app-ssr-plus
