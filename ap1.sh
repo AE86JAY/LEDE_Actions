@@ -14,3 +14,4 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add a feed source
+svn co OpenClash https://github.com/vernesong/OpenClash.git pacakge/opecash
