@@ -37,7 +37,7 @@ env:
   
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
     - name: 检查
@@ -143,7 +143,7 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: asus_rt-acrh17-OpenWrt
+        name: 默认-acrh17-OpenWrt
         path: ${{ env.FIRMWARE }}
 
     - name: 生成标签
