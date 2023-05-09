@@ -24,8 +24,7 @@ on:
 #  - cron: 0 17 14 * *
 
 env:
-  #REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_URL: https://github.com/ae86jay/lede
+  REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: 5.config
@@ -115,7 +114,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j1 V=sc || make -j$(nproc) V=sc
+        make -j1 || make -j$(nproc) V=sc
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 检查可用容量
