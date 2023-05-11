@@ -105,7 +105,8 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-
+    - name: 继续下一步流程
+      run: touch /tmp/continue
     - name: 下载包
       id: package
       run: |
