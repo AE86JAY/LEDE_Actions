@@ -153,7 +153,10 @@ jobs:
         Rtime=$(date +%Y.%m.%d-%H:%M)
         release_tag="rt-acrh17固件-$time"
         release_name="rt-acrh17固件$Rtime"
-        echo "插件较多，详见config.buildinfo
+        echo "阿里动态域名、百度网盘、宽带提速小助手、Frpc内网穿透、
+        可道云私有云盘、家长控制、阿里云盘fuse、全能推送、
+        adguardhome去广告、应用过滤、动态域名、多线多拨、
+        微力同步、解锁灰色网易云音乐、SSR-Plus科学。
         默认网关：192.168.100.2
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
