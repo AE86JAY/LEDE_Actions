@@ -26,3 +26,4 @@ git clone https://github.com/sirpdboy/luci-app-parentcontrol.git package/luci-ap
 git clone https://github.com/chenhw2/luci-app-aliddns.git package/luci-app-aliddns
 git clone https://github.com/AdguardTeam/AdGuardHome package/AdGuardHome
 git clone https://github.com/xiaoxiao29/luci-app-adguardhome.git package/luci-app-AdGuardHome
+git clone https://github.com/sirpdboy/chatgpt-web.git package/luci-app-chatgpt
