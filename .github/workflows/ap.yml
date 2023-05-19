@@ -111,7 +111,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 V=s
+        make -j$(nproc) || make -j1 V=99
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 检查可用容量
@@ -150,7 +150,7 @@ jobs:
         Rtime=$(date +%Y.%m.%d-%H:%M)
         release_tag="rt-acrh17-AP-$time"
         release_name="rt-acrh17-AP-$Rtime"
-        echo "默认配置，适合AP模式使用。
+        echo "只加了简单Mesh、openclash，，其它为L大默认配置，适合AP模式使用。
         默认网关：192.168.100.2
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
