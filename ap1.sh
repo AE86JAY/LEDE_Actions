@@ -13,4 +13,4 @@
 # Uncomment a feed source
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
-# git clone https://github.com/vernesong/OpenClash.git pacakge/opecash
+git clone https://github.com/vernesong/OpenClash.git pacakge/opecash
