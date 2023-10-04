@@ -149,7 +149,7 @@ jobs:
         Rtime=$(date +%Y.%m.%d-%H:%M)
         release_tag="ACRH17_AC42U-$time"
         release_name="ACRH17_AC42U-$Rtime"
-        echo "默认网关：192.168.100.2
+        echo "linux5.10内核，默认网关：192.168.100.2
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
         echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
