@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: ACRH17默认版AP
+name: ACRH17默认版
 
 on:
   repository_dispatch:
@@ -104,7 +104,7 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        make dirclean
+        make download -j8
         
     - name: 整合固件
       id: compile
@@ -130,8 +130,7 @@ jobs:
         rm -rf sha256sums
         rm -rf version.buildinfo
         sleep 2
-        mv *.bin AP-ACRH17-$(date +%Y.%m.%d-%H.%M).bin
-        mv *.trx AP-ACRH17-$(date +%Y.%m.%d-%H.%M).trx
+        mv *.bin ACRH17-$(date +%Y.%m.%d-%H.%M).bin
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
