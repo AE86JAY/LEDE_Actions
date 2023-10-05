@@ -10,8 +10,8 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 # Modify default IP
-sed -i 's/192.168.1.1/192.168.100.2/g' package/base-files/files/bin/config_generate
-sed #-i "s/set system.ntp.enable_server='1'/set system.ntp.enable_server='0'/g"
+sed -i 's/192.168.1.1/192.168.100.2/g' ./package/base-files/files/bin/config_generate
+# sed -i "s/set system.ntp.enable_server='1'/set system.ntp.enable_server='0'/g" ./package/base-files/files/bin/config_generate
 sed -i "s/hostname='OpenWrt'/hostname='LEDE'/g" ./package/base-files/files/bin/config_generate
 rm -rf /feeds/luci/themes/luci-theme-argon
 sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
