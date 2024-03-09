@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: RT-ACRH17/RT-ACRH17_AC42U_ai超多插件
+name: RT-ACRH17/RT-ACRH17_AC42U_ai超多插件IM
 
 on:
   repository_dispatch:
@@ -24,7 +24,7 @@ on:
   - cron: 0 17 14 * *
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL: https://github.com/immortalwrt/immortalwrt.git
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: 3.config
@@ -72,7 +72,7 @@ jobs:
       uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
-        mixkey: 'ACRH17_AC42U_ai'
+        mixkey: 'ACRH17_AC42U_ai_im'
         prefix: 'openwrt'
 
     - name: 加载软件源
@@ -130,7 +130,7 @@ jobs:
         rm -rf sha256sums
         rm -rf version.buildinfo
         sleep 2
-        mv *.bin ACRH17_AC42U-$(date +%Y.%m.%d-%H.%M).bin
+        mv *.bin ACRH17_AC42U-im$(date +%Y.%m.%d-%H.%M).bin
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
@@ -138,7 +138,7 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: ACRH17_AC42U-OpenWrt_ai
+        name: ACRH17_AC42U-OpenWrt_ai_im
         path: ${{ env.FIRMWARE }}
 
     - name: 生成标签
@@ -147,9 +147,9 @@ jobs:
       run: |
         time=$(date +%Y.%m.%d)
         Rtime=$(date +%Y.%m.%d-%H:%M)
-        release_tag="ACRH17_AC42U_ai超多插件-$time"
-        release_name="ACRH17_AC42U_ai超多插件-$Rtime"
-        echo "超多插件,linux5.10内核，默认网关：192.168.100.2
+        release_tag="ACRH17_AC42U_ai超多插件_im-$time"
+        release_name="ACRH17_AC42U_ai超多插件-im-$Rtime"
+        echo "超多插件,linux6.10内核，默认网关：192.168.100.2
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
         echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
