@@ -24,7 +24,8 @@ on:
   - cron: 0 17 14 * *
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
+# REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL: https://github.com/WRMing1008/lede-2022-8-old.git
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: 3.config
