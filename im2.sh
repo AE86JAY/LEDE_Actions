@@ -16,4 +16,3 @@ sed -i "s/hostname='immortalwrt'/hostname='LEDE'/g" package/base-files/files/bin
 sed -i 's/+luci-theme-bootstrap/+luci-theme-argon/g' feeds/luci/collections/luci-light/Makefile
 sed -i 's|<a class="luci-link" href="https://github.com/openwrt/luci"|<a class="luci-link" href="https://www.right.com.cn/forum/space-uid-671291.html"|g' feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/footer.htm
 sed -i 's/Powered by <%= ver.luciname %>/Powered by 恩山无线论坛_突破重韦_/g' feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-rm -rf package/openwrt-packages/*argon*
