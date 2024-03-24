@@ -21,7 +21,7 @@ on:
 
 #定时触发开始编译
   schedule:
-  - cron: 0 18 14 * *
+  - cron: 0 22 14 * *
 
 env:
   REPO_URL:  https://github.com/immortalwrt/immortalwrt.git
@@ -41,7 +41,7 @@ jobs:
 
     steps:
     - name: 检查
-      uses: actions/checkout@main
+      uses: actions/checkout@v4
     
     - name: 安装编译环境
       env:
@@ -156,7 +156,7 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
         
     - name: 上传固件至项目
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_USER_TOKEN }}
