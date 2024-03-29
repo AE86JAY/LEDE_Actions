@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: RT-ACRH17/RT-AC42U/AC-RT2200_important版
+name: RT-ACRH17_important版
 
 on:
   repository_dispatch:
