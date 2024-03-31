@@ -15,4 +15,4 @@
 
 # Add a feed source
 git clone https://github.com/haiibo/openwrt-packages package/openwrt-packages
-git clone https://github.com/sirpdboy/chatgpt-web.git package/luci-app-chatgpt
+# git clone https://github.com/sirpdboy/chatgpt-web.git package/luci-app-chatgpt
