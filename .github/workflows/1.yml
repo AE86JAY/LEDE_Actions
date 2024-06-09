@@ -65,7 +65,7 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD
-        git clone $REPO_URL -b 21.02 $REPO_BRANCH openwrt
+        git clone $REPO_URL -b 21.02.5 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: 缓存
