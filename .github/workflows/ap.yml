@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: RT-ACRH17/RT-AC42U/AC-RT2200默认版
+name: RT-ACRH17_默认
 
 on:
   repository_dispatch:
@@ -21,28 +21,28 @@ on:
 
 #定时触发开始编译
   schedule:
-  - cron: 0 18 14 * *
+  - cron: 0 22 14 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.ap
+  FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ap.config
-  DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
+  DIY_P1_SH: ap1.sh
+  DIY_P2_SH: ap2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
     - name: 检查
-      uses: actions/checkout@main
-    
+      uses: actions/checkout@v4
+
     - name: 安装编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -60,7 +60,7 @@ jobs:
         sudo -E timedatectl set-timezone "Asia/Shanghai"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-    
+
     - name: 下载源码
       working-directory: /workdir
       run: |
@@ -105,7 +105,7 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
         make download -j8
-        
+
     - name: 整合固件
       id: compile
       run: |
@@ -130,7 +130,7 @@ jobs:
         rm -rf sha256sums
         rm -rf version.buildinfo
         sleep 2
-        mv *.bin ACRH17-$(date +%Y.%m.%d-%H.%M).bin
+        mv *.bin ACRH17-默认_$(date +%Y.%m.%d-%H.%M).bin
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
@@ -138,7 +138,7 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: 默认-acrh17-OpenWrt
+        name: 默认-acrh17-OpenWrt_默认
         path: ${{ env.FIRMWARE }}
 
     - name: 生成标签
@@ -147,31 +147,31 @@ jobs:
       run: |
         time=$(date +%Y.%m.%d)
         Rtime=$(date +%Y.%m.%d-%H:%M)
-        release_tag="rt-acrh17-AP-$time"
-        release_name="rt-acrh17-AP-$Rtime"
-        echo "感谢Lean等大佬们的源码，linux5.10内核，极少插件，默认网关：192.168.100.2
+        release_tag="rt-acrh17-默认-$time"
+        release_name="rt-acrh17-默认-$Rtime"
+        echo "感谢lean等大佬们的源码，默认网关：192.168.1.65
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
         echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
-        
+
     - name: 上传固件至项目
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_USER_TOKEN }}
       with:
-        name: ${{ steps.tag.outputs.release_name }} 
+        name: ${{ steps.tag.outputs.release_name }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
 
     - name: 删除任务
-      uses: FunctionXJB/delete-workflow-runs@main
+      uses: Mattraks/delete-workflow-runs@main
       with:
         retain_days: 18
         keep_minimum_runs: 3
-        
+
 #    - name: 'Server酱通知'
 #      uses: easychen/github-action-server-chan@v1.0.0
 #      if: steps.compile.outputs.status == 'success' && !cancelled()
