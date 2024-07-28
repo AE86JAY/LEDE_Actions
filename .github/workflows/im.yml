@@ -147,7 +147,8 @@ jobs:
       run: |
         time=$(date +%Y.%m.%d)
         Rtime=$(date +%Y.%m.%d-%H:%M)
-        release_tag="rt-acrh17-immortalwrt-$time"          release_name="rt-acrh17-immortalwrt-$Rtime"
+        release_tag="rt-acrh17-immortalwrt-$time"
+        release_name="rt-acrh17-immortalwrt-$Rtime"
         echo "感谢immortalwrt等大佬们的源码，linux6.6内核，极少插件，默认网关：192.168.1.65
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
