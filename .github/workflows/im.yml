@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: RT-ACRH17_important版
+name: RT-ACRH17-immortalwrt版
 
 on:
   repository_dispatch:
@@ -147,9 +147,11 @@ jobs:
       run: |
         time=$(date +%Y.%m.%d)
         Rtime=$(date +%Y.%m.%d-%H:%M)
-        release_tag="rt-acrh17-imprtant-$time"
-        release_name="rt-acrh17-important-$Rtime"
-        echo "感谢important等大佬们的源码，linux6.6内核，极少插件，默认网关：192.168.100.2
+        release_tag="rt-acrh17-immortalwrt-$time"
+        release_name="rt-acrh17-immortalwrt-$Rtime"
+        echo "感谢
+
+等大佬们的源码，linux6.6内核，极少插件，默认网关：192.168.100.2
         默认用户名|密码：root | password" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
         echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
