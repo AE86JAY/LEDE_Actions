@@ -101,8 +101,6 @@ jobs:
         #nonessential>>add "github.actor" to "DISTRIB_DESCRIPTION" in "zzz-default-settings"
         sed -i "s/OpenWrt /${{github.actor}} compiled (${TEMP:8}) \/ OpenWrt /g" openwrt/package/lean/default-settings/files/zzz-default-settings
 
-    -
-
     - name: 加载自定义配置
       run: |
         [ -e files ] && mv files openwrt/files
