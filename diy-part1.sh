@@ -14,6 +14,7 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add a feed source
+echo 'src-git sundaqiang https://github.com/sundaqiang/openwrt-packages-backup' >>feeds.conf.default
 git clone https://github.com/AE86JAY/op-apps.git package/opapps
 # git clone https://github.com/kiddin9/openwrt-packages.git package/diy1
 # git clone https://github.com/281677160/luci-app-autoupdate.git package/diy2
