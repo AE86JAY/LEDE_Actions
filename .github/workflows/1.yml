@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: RT-ACRH17_lede
+name: RT-ACRH17_lede2
 
 on:
   repository_dispatch:
@@ -27,7 +27,7 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: ap.config
+  CONFIG_FILE: 1.config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
@@ -72,7 +72,7 @@ jobs:
       uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
-        mixkey: 'acrh17_lede'
+        mixkey: 'acrh17_lede2'
         prefix: 'openwrt'
 
     - name: 加载软件源
@@ -90,7 +90,7 @@ jobs:
 
     - name: Openwrt AutoUpdate
       run: |
-        TEMP=ACRH17-lede_$(date +%Y.%m.%d-%H.%M)$(git rev-parse --short HEAD)
+        TEMP=ACRH17-lede2_$(date +%Y.%m.%d-%H.%M)$(git rev-parse --short HEAD)
         echo "RELEASE_TAG=$TEMP" >> $GITHUB_ENV
         #required>>add "DISTRIB_GITHUB" to "zzz-default-settings"
         sed -i "/DISTRIB_DESCRIPTION=/a\sed -i '/DISTRIB_GITHUB/d' /etc/openwrt_release" openwrt/package/lean/default-settings/files/zzz-default-settings
@@ -151,7 +151,7 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: 默认-acrh17-OpenWrt_lede
+        name: acrh17-OpenWrt_lede2
         path: ${{ env.FIRMWARE }}
 
     - name: 生成标签
@@ -160,8 +160,8 @@ jobs:
       run: |
         time=$(date +%Y.%m.%d)
         Rtime=$(date +%Y.%m.%d-%H:%M)
-        release_tag="rt-acrh17-lede-$time"
-        release_name="rt-acrh17-lede-$Rtime"
+        release_tag="rt-acrh17-lede2-$time"
+        release_name="rt-acrh17-lede2-$Rtime"
         echo "感谢lean等大佬们的源码，默认网关：192.168.1.65
         默认用户名|密码：root | 无密码" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
