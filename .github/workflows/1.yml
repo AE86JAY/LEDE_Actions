@@ -88,6 +88,21 @@ jobs:
     - name: 安装软件源
       run: cd openwrt && ./scripts/feeds install -a && ./scripts/feeds install -a
 
+    - name: Openwrt AutoUpdate
+      run: |
+        TEMP=ACRH17-lede_$(date +%Y.%m.%d-%H.%M)$(git rev-parse --short HEAD)
+        echo "RELEASE_TAG=$TEMP" >> $GITHUB_ENV
+        #required>>add "DISTRIB_GITHUB" to "zzz-default-settings"
+        sed -i "/DISTRIB_DESCRIPTION=/a\sed -i '/DISTRIB_GITHUB/d' /etc/openwrt_release" openwrt/package/lean/default-settings/files/zzz-default-settings
+        sed -i "/DISTRIB_GITHUB/a\echo \"DISTRIB_GITHUB=\'https://github.com/${{github.repository}}\'\" >> /etc/openwrt_release" openwrt/package/lean/default-settings/files/zzz-default-settings
+        #required>>add "DISTRIB_VERSIONS" to "zzz-default-settings"
+        sed -i "/DISTRIB_DESCRIPTION=/a\sed -i '/DISTRIB_VERSIONS/d' /etc/openwrt_release" openwrt/package/lean/default-settings/files/zzz-default-settings
+        sed -i "/DISTRIB_VERSIONS/a\echo \"DISTRIB_VERSIONS=\'${TEMP:8}\'\" >> /etc/openwrt_release" openwrt/package/lean/default-settings/files/zzz-default-settings
+        #nonessential>>add "github.actor" to "DISTRIB_DESCRIPTION" in "zzz-default-settings"
+        sed -i "s/OpenWrt /${{github.actor}} compiled (${TEMP:8}) \/ OpenWrt /g" openwrt/package/lean/default-settings/files/zzz-default-settings
+
+    -
+
     - name: 加载自定义配置
       run: |
         [ -e files ] && mv files openwrt/files
@@ -150,7 +165,7 @@ jobs:
         release_tag="rt-acrh17-lede-$time"
         release_name="rt-acrh17-lede-$Rtime"
         echo "感谢lean等大佬们的源码，默认网关：192.168.1.65
-        默认用户名|密码：root | password" >> release.txt
+        默认用户名|密码：root | 无密码" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
         echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
