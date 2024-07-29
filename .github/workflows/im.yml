@@ -90,7 +90,7 @@ jobs:
 
     - name: Openwrt AutoUpdate
       run: |
-        TEMP=ACRH17-im_$(date +%Y.%m.%d-%H.%M)$(git rev-parse --short HEAD)
+        TEMP=rt-acrh17-immortalwrt_$(date +%Y.%m.%d-%H.%M)$(git rev-parse --short HEAD)
         echo "RELEASE_TAG=$TEMP" >> $GITHUB_ENV
         #required>>add "DISTRIB_GITHUB" to "99-default-settings"
         sed -i "/DISTRIB_DESCRIPTION=/a\sed -i '/DISTRIB_GITHUB/d' /etc/openwrt_release" openwrt/package/emortal/default-settings/files/99-default-settings
